@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ "$1" = "h" ] ;then
+	echo "Example: ./db energyMRTKernel.cpp 51 paper_sim_debug"
+else
+	# this worked: gdbgui ./example --gdb-args=" -ex 'break energyMRTKernel.cpp:117' "
+	LONGSTRINGS="set print elements 0"
+	CATCHTHROWS="" # "catch throw"
+	cmd="-ex '$LONGSTRINGS' -ex '$CATCHTHROWS' -ex 'break "$1":"$2"' -ex 'r' "$3""  # ./paper_sim_debug" or ./example" or ./paper_sim"
+	echo "Executing: gdbgui --gdb-args=\""$cmd"\""
+	gdbgui --gdb-args="$cmd"
+fi
